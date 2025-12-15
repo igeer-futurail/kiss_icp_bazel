@@ -1,0 +1,61 @@
+diff --git a/cpp/kiss_icp/core/Registration.cpp b/cpp/kiss_icp/core/Registration.cpp
+index 6bd1fb7..90498c0 100644
+--- a/cpp/kiss_icp/core/Registration.cpp
++++ b/cpp/kiss_icp/core/Registration.cpp
+@@ -138,8 +138,21 @@ Registration::Registration(int max_num_iteration, double convergence_criterion,
+ Sophus::SE3d Registration::AlignPointsToMap(const std::vector<Eigen::Vector3d> &frame,
+                                             const VoxelHashMap &voxel_map,
+                                             const Sophus::SE3d &initial_guess,
+-                                            const double max_distance,
++                                            const double max_correspondence_distance,
+                                             const double kernel_scale) {
++    int dummy;
++    double ddummy;
++    return AlignPointsToMap(frame, voxel_map, initial_guess, max_correspondence_distance,
++                            kernel_scale, dummy, ddummy);
++}
++
++Sophus::SE3d Registration::AlignPointsToMap(const std::vector<Eigen::Vector3d> &frame,
++                                            const VoxelHashMap &voxel_map,
++                                            const Sophus::SE3d &initial_guess,
++                                            const double max_distance,
++                                            const double kernel_scale,
++                                            int &iterations,
++                                            double &dxnorm) {
+     if (voxel_map.Empty()) return initial_guess;
+ 
+     // Equation (9)
+@@ -149,11 +162,13 @@ Sophus::SE3d Registration::AlignPointsToMap(const std::vector<Eigen::Vector3d> &
+     // ICP-loop
+     Sophus::SE3d T_icp = Sophus::SE3d();
+     for (int j = 0; j < max_num_iterations_; ++j) {
++        iterations = j;
+         // Equation (10)
+         const auto correspondences = DataAssociation(source, voxel_map, max_distance);
+         // Equation (11)
+         const auto &[JTJ, JTr] = BuildLinearSystem(correspondences, kernel_scale);
+         const Eigen::Vector6d dx = JTJ.ldlt().solve(-JTr);
++        dxnorm = dx.norm();
+         const Sophus::SE3d estimation = Sophus::SE3d::exp(dx);
+         // Equation (12)
+         TransformPoints(estimation, source);
+diff --git a/cpp/kiss_icp/core/Registration.hpp b/cpp/kiss_icp/core/Registration.hpp
+index 7daaf50..bd47003 100644
+--- a/cpp/kiss_icp/core/Registration.hpp
++++ b/cpp/kiss_icp/core/Registration.hpp
+@@ -39,6 +39,14 @@ struct Registration {
+                                   const double max_correspondence_distance,
+                                   const double kernel_scale);
+ 
++    Sophus::SE3d AlignPointsToMap(const std::vector<Eigen::Vector3d> &frame,
++                                  const VoxelHashMap &voxel_map,
++                                  const Sophus::SE3d &initial_guess,
++                                  const double max_correspondence_distance,
++                                  const double kernel_scale,
++                                  int &iterations,
++                                  double &dxnorm);
++
+     int max_num_iterations_;
+     double convergence_criterion_;
+     int max_num_threads_;
+
