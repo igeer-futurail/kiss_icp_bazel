@@ -4,6 +4,7 @@ load("@rules_cc//cc:cc_test.bzl", "cc_test")
 alias(
     name = "kiss_icp",
     actual = "@kiss_icp",
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
