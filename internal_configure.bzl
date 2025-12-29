@@ -1,12 +1,10 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:local.bzl", "new_local_repository")
 
 def _internal_configure_extension_impl(_):
-    http_archive(
+    new_local_repository(
         name = "kiss_icp",
         build_file = "//:kiss_icp.BUILD",
-        strip_prefix = "kiss-icp-1.2.3",
-        integrity = "sha256-CHqXRcWyzDBOcr+HkpNx7LECyLdcAmFixY1kPWr4hJw=",
-        urls = ["https://github.com/PRBonn/kiss-icp/archive/refs/tags/v1.2.3.tar.gz"],
+        path = "/workspaces/densha/navigation/libraries/kiss-icp",
     )
 
 internal_configure_extension = module_extension(implementation = _internal_configure_extension_impl)

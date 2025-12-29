@@ -1,5 +1,5 @@
 {
-  "lockFileVersion": 18,
+  "lockFileVersion": 24,
   "registryFileHashes": {
     "https://bcr.bazel.build/bazel_registry.json": "8a28e4aff06ee60aed2a8c281907fb8bcbf3b753c91fb5a5c57da3215d5b3497",
     "https://bcr.bazel.build/modules/abseil-cpp/20210324.2/MODULE.bazel": "7cd0312e064fde87c8d1cd79ba06c876bd23630c83466e9500321be55c96ace2",
@@ -150,21 +150,17 @@
   "moduleExtensions": {
     "//:internal_configure.bzl%internal_configure_extension": {
       "general": {
-        "bzlTransitiveDigest": "jZR6Zg44BXzoloBs9mBF46qv+onhp98igNUhGLAs9mY=",
+        "bzlTransitiveDigest": "o53Ueu+Q+Owaow1oREKVnOWHRujnmJ2OS9KrH2X12Yg=",
         "usagesDigest": "yfF9zglRhQDhN50MZRQztooTFwh/Hxt0rr/OPgwdJvg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
           "kiss_icp": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:local.bzl%new_local_repository",
             "attributes": {
               "build_file": "@@//:kiss_icp.BUILD",
-              "strip_prefix": "kiss-icp-1.2.3",
-              "integrity": "sha256-CHqXRcWyzDBOcr+HkpNx7LECyLdcAmFixY1kPWr4hJw=",
-              "urls": [
-                "https://github.com/PRBonn/kiss-icp/archive/refs/tags/v1.2.3.tar.gz"
-              ]
+              "path": "/workspaces/densha/navigation/libraries/kiss-icp"
             }
           }
         },
@@ -179,7 +175,7 @@
     },
     "@@rules_kotlin+//src/main/starlark/core/repositories:bzlmod_setup.bzl%rules_kotlin_extensions": {
       "general": {
-        "bzlTransitiveDigest": "OlvsB0HsvxbR8ZN+J9Vf00X/+WVz/Y/5Xrq2LgcVfdo=",
+        "bzlTransitiveDigest": "rL/34P1aFDq2GqVC2zCFgQ8nTuOC6ziogocpvG50Qz8=",
         "usagesDigest": "QI2z8ZUR+mqtbwsf2fLqYdJAkPOHdOV+tF2yVAUgRzw=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -241,5 +237,6 @@
         ]
       }
     }
-  }
+  },
+  "facts": {}
 }
